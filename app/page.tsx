@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Head from "./components/Head";
+
 export default function Home() {
   return (
-    <div className="flex w-full items-center justify-center bg-white font-sans ">
-      
-      <main className="flex min-h-screen  flex-col items-center justify-between  bg-white sm:items-start">
-      <Head/>
+    <div className="min-h-screen w-full bg-white font-sans flex items-center justify-center px-4">
+      <main className="w-full max-w-md flex flex-col items-center justify-center text-center">
+        <Head />
       </main>
     </div>
   );
