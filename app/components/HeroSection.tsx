@@ -5,8 +5,6 @@ import Image from "next/image";
 import {
   ArrowRight,
   Lock,
-  Activity,
-  Sparkles,
   ShieldCheck,
   ChevronRight,
   CheckCircle2,

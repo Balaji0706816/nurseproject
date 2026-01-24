@@ -1,0 +1,56 @@
+{
+    "items": [
+      {
+        "id": "emotional_energy_day2_simple",
+        "domain": "Emotional",
+        "subscaleItem": "Feeling that diabetes is taking up too much of my mental and physical energy every day",
+        "conversationType": "Simple",
+        "distressMin": 0,
+        "distressMax": 4,
+        "stampleyPrompt": "Did it feel like diabetes took up a lot of your energy today — mentally or physically?",
+        "possibleResponses": ["Yes", "No"],
+        "validationLine": "It’s understandable to feel drained — diabetes requires constant attention.",
+        "microSkill": "Box Breathing",
+        "skillObjective": "Regulate stress and reset focus when energy feels low.",
+        "educationChip": "Breathing slowly helps activate your body’s relaxation response.",
+        "affirmation": "Even one calm breath helps you recharge.",
+        "suggestedDay": 2,
+        "variant": "standard"
+      },
+      {
+        "id": "emotional_energy_day2_reflective",
+        "domain": "Emotional",
+        "subscaleItem": "Feeling that diabetes is taking up too much of my mental and physical energy every day",
+        "conversationType": "Reflective",
+        "distressMin": 5,
+        "distressMax": 7,
+        "stampleyPrompt": "What part of diabetes took up the most energy for you today — your thoughts, emotions, or physical routines?",
+        "possibleResponses": [],
+        "validationLine": "That makes sense — balancing all of this can be exhausting.",
+        "microSkill": "Energy Budget Check",
+        "skillObjective": "Help participants notice where energy goes and where they can rest.",
+        "educationChip": "Checking where your energy goes helps you decide what really needs attention.",
+        "affirmation": "You’re learning to manage your energy wisely.",
+        "suggestedDay": 2,
+        "variant": "standard"
+      },
+      {
+        "id": "emotional_energy_day2_followup",
+        "domain": "Emotional",
+        "subscaleItem": "Feeling that diabetes is taking up too much of my mental and physical energy every day",
+        "conversationType": "Follow-Up Reflection",
+        "distressMin": 8,
+        "distressMax": 10,
+        "stampleyPrompt": "It sounds like diabetes has been taking up almost all of your energy. What’s one small thing that might help lighten the load?",
+        "possibleResponses": [],
+        "validationLine": "You’ve been working really hard — it’s okay to take breaks when needed.",
+        "microSkill": "Self-Compassion Break",
+        "skillObjective": "Reduce guilt about rest and restore self-kindness.",
+        "educationChip": "Treating yourself with care helps your body recover from stress and fatigue.",
+        "affirmation": "Rest is not failure — it’s fuel for the next step.",
+        "suggestedDay": 2,
+        "variant": "standard"
+      }
+    ]
+  }
+  

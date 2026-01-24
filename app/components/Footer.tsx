@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+
 import { 
   Activity, // Replaced 'Command' with 'Activity' for medical context
   ArrowRight, 

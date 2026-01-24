@@ -1,4 +1,4 @@
-import script from "@/data/stampley-script.json";
+import script from "../../data/stampley-script.json"; 
 
 export type ScriptItem = {
   id: string;

@@ -1,4 +1,4 @@
-import { Sparkles, CheckCircle2, ShieldCheck, Activity, Lock } from "lucide-react";
+
 import ThreeStepInfoStrip from "./ThreeStepInfoStrip";
 
     export default function Feature() {
