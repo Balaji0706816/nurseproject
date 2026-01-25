@@ -1,15 +1,27 @@
 @import "tailwindcss";
 
+/* -----------------------------
+   Design Tokens + Fonts
+-------------------------------- */
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* Fonts from next/font */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-authority: var(--font-authority);
 }
 
+/* Tailwind theme mapping */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  /* Map fonts for Tailwind utilities */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-authority: var(--font-authority);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,8 +31,15 @@
   }
 }
 
+/* Base styles */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Utility class for authority font (Tailwind-style) */
+.font-authority {
+  font-family: var(--font-authority), Georgia, "Times New Roman", serif;
 }

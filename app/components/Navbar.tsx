@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import type { LucideIcon } from 'lucide-react';
 import {
   Activity,
+  ArrowRight,
   BarChart,
   Calendar,
   ChevronDown,
@@ -83,7 +84,6 @@ const Navbar: React.FC = () => {
     setActiveMobileSection((current) => (current === label ? null : label));
   }, []);
 
-  // Lock body scroll while drawer is open
   useEffect(() => {
     document.body.style.overflow = isMobileOpen ? 'hidden' : '';
     return () => {
@@ -91,7 +91,6 @@ const Navbar: React.FC = () => {
     };
   }, [isMobileOpen]);
 
-  // Close on ESC
   useEffect(() => {
     if (!isMobileOpen) return;
     const onKeyDown = (e: KeyboardEvent) => {
@@ -101,16 +100,14 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [isMobileOpen, closeMobile]);
 
-  // Close drawer on route change (mobile UX)
   useEffect(() => {
     if (isMobileOpen) closeMobile();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  // If user resizes to desktop while open, close it (prevents weird state)
   useEffect(() => {
     const onResize = () => {
-      if (window.innerWidth >= 768) closeMobile(); // md breakpoint
+      if (window.innerWidth >= 768) closeMobile();
     };
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
@@ -118,26 +115,32 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      {/* Top Nav */}
       <nav className="fixed inset-x-0 top-0 z-50 border-b border-slate-200/60 bg-white backdrop-blur-xl shadow-[0_1px_0_rgba(15,23,42,0.04)]">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-20 lg:px-8">
           {/* Brand */}
           <Link
             href="/"
-            className="relative z-50 flex items-center gap-2.5 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600/30"
+            className="relative z-50 flex items-center gap-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600/30"
           >
-            <Image src="/images/logo.png" alt="AIDES-T2D Logo" width={78} height={78} className="rounded-lg" priority />
-            <div className="min-w-0">
-              <div className="flex items-center gap-2">
-                <span className="truncate text-[20px] font-semibold text-teal-600">
-                  AIDES-<span className="text-orange-500">T2D</span>
-                </span>
-                <span className="hidden sm:inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white/70 px-2 py-0.5 text-[10px] font-semibold uppercase text-slate-600">
-                  <Lock className="h-3.5 w-3.5" />
-                  Secure Portal
-                </span>
-              </div>
-              <span className="hidden sm:block text-xs text-slate-500">University of Massachusetts Boston</span>
+            <Image
+              src="/images/glucometer2.png"
+              alt="AIDES-T2D Logo"
+              width={140  }
+              height={140}
+              className="rounded-none"
+              priority
+            />
+
+            <div className="flex flex-col leading-tight">
+              {/* Main Name (Authority font) */}
+              <span className="font-authority text-[26px]  tracking-wide text-slate-900">
+                AIDES-T2D
+              </span>
+
+              {/* Tagline (Authority font) */}
+              <span className="font-authority text-[13px] tracking-wide text-slate-600">
+                Digital Health Innovation
+              </span>
             </div>
           </Link>
 
@@ -155,8 +158,8 @@ const Navbar: React.FC = () => {
                 >
                   <button
                     type="button"
-                    className={`flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium transition ${
-                      isActive ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                    className={`flex items-center gap-1 rounded-full px-4 py-2 text-md font-medium transition ${
+                      isActive ? ' text-black cursor-pointer' : 'text-slate-600 hover:text-slate-900 cursor-pointer'
                     }`}
                     aria-haspopup="menu"
                     aria-expanded={isActive}
@@ -190,7 +193,9 @@ const Navbar: React.FC = () => {
                               <child.icon size={18} />
                             </div>
                             <div className="min-w-0">
-                              <p className="text-sm font-semibold text-slate-900 group-hover:text-blue-700">{child.label}</p>
+                              <p className="text-sm font-semibold text-slate-900 group-hover:text-blue-700">
+                                {child.label}
+                              </p>
                               <p className="text-xs text-slate-500">{child.description}</p>
                             </div>
                             <ChevronRight className="ml-auto mt-2 h-4 w-4 opacity-0 group-hover:opacity-70 text-slate-400 transition" />
@@ -206,14 +211,25 @@ const Navbar: React.FC = () => {
 
           {/* Desktop actions */}
           <div className="hidden md:flex items-center gap-3">
-            <Link
-              href="/login"
-              className="group relative inline-flex items-center gap-2 rounded-xl bg-teal-600 hover:bg-teal-700 px-6 py-2.5 focus:outline-none focus:ring-2 focus:ring-slate-400/40"
-            >
-              <span className="text-white flex items-center justify-center gap-2 font-medium">
-                Log In <ArrowRightIcon />
-              </span>
-            </Link>
+          <Link
+  href="/login"
+  className="
+    group relative inline-flex items-center gap-2
+    rounded-full border border-white
+    bg-white px-5 py-2.5
+    text-md text-slate-900
+    transition
+    hover:border-slate-300 hover:bg-slate-50
+    focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600/30
+  "
+>
+  <span className="flex items-center gap-2 font-authority tracking-wide text-slate-700 text-md">
+    Log In
+    <ArrowRight className="h-4 w-4 text-slate-900" />
+  </span>
+</Link>
+
+
             <Link href="/help" className="p-2 rounded-xl hover:text-slate-900 text-slate-500">
               <span className="text-orange-500 flex items-center justify-center">
                 <HelpCircle size={20} />
@@ -236,9 +252,7 @@ const Navbar: React.FC = () => {
 
       {/* Mobile Drawer + Backdrop */}
       <div
-        className={`fixed inset-0 z-[60] md:hidden transition ${
-          isMobileOpen ? 'pointer-events-auto' : 'pointer-events-none'
-        }`}
+        className={`fixed inset-0 z-[60] md:hidden transition ${isMobileOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
         aria-hidden={!isMobileOpen}
       >
         {/* Backdrop */}
@@ -261,8 +275,8 @@ const Navbar: React.FC = () => {
         >
           <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3">
             <div className="flex items-center gap-2">
-              <div className="text-sm font-semibold text-slate-900">Menu</div>
-              <span className="text-xs text-slate-500">AIDES-T2D</span>
+              <div className="font-authority text-sm font-semibold text-slate-900">Menu</div>
+              <span className="font-authority text-xs text-slate-500">AIDES-T2D</span>
             </div>
             <button
               type="button"
@@ -308,8 +322,8 @@ const Navbar: React.FC = () => {
                       className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left"
                       aria-expanded={open}
                     >
-                      <span className="text-sm font-semibold text-slate-900">{section.label}</span>
-                      <ChevronDown className={`h-4 w-4 text-slate-500 transition ${open ? 'rotate-180' : ''}`} />
+                      <span className="font-authority text-sm font-semibold text-slate-900">{section.label}</span>
+                      <ChevronDown className={`h-8 w-8 text-slate-500 transition ${open ? 'rotate-180' : ''}`} />
                     </button>
 
                     <div className={`grid transition-all ${open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
@@ -351,7 +365,6 @@ const Navbar: React.FC = () => {
         </aside>
       </div>
 
-      {/* Spacer */}
       <div className="h-16 lg:h-20" />
     </>
   );
