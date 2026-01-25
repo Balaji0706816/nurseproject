@@ -171,7 +171,7 @@ export default function Navbar() {
                     type="button"
                     className={[
                       'inline-flex items-center gap-1 rounded-full px-4 py-2 text-md  transition',
-                      isActive ? 'text-slate-900' : 'text-slate-600 hover:text-black',
+                      isActive ? 'text-slate-900 cursor-pointer' : 'text-slate-600 hover:text-black cursor-pointer',
                     ].join(' ')}
                     aria-haspopup="menu"
                     aria-expanded={isActive}
