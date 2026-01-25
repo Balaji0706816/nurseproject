@@ -121,33 +121,39 @@ export default function Navbar() {
     <>
       {/* Top Nav */}
       <nav className="fixed inset-x-0 top-0 z-50 border-b border-slate-200/70 bg-white backdrop-blur-xl shadow-[0_1px_0_rgba(15,23,42,0.04)]">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-20 lg:px-8">
+      <div className="mx-auto flex h-18 max-w-full sm:max-w-7xl items-center justify-between px-2 sm:px-6 lg:h-20 lg:px-8">
           {/* Brand */}
-          <Link
-            href="/"
-            className="relative z-50 flex items-center gap-1 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600/30"
-          >
-            {/* ✅ Navbar-friendly logo size (works on phone) */}
-            <Image
-              src="/images/glucometerlogo.png"
-              alt="AIDES-T2D"
-              width={140}
-              height={140}  
-              priority
-            />
+         {/* Brand */}
+<Link
+  href="/"
+  className="
+    relative z-50 flex items-center gap-2
+    rounded-xl
+    focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600/30 sm:leading-tight translate-x-[-20px] 
+  "
+>
+  {/* Logo */}
+  <Image
+    src="/images/glucometer2.png"
+    alt="AIDES-T2D Logo"
+    width={130}
+    height={130}
+    className="shrink-0 object-contain"
+    priority
+  />
 
-            <div className="min-w-0 leading-tight">
-              {/* ✅ Responsive title */}
-              <div className="font-authority truncate text-[18px] font-semibold tracking-wide text-slate-900 sm:text-[22px]">
-                AIDES-T2D
-              </div>
+  {/* Text */}
+  <div className="flex flex-col justify-center leading-tight translate-x-[-30px]  transition-all duration-200">
+    <div className="font-authority truncate text-[17px]  tracking-wide text-slate-900 sm:text-[20px]">
+      AIDES-T2D
+    </div>
 
-              {/* ✅ Simple + clean tagline (hidden on very small screens) */}
-              <div className="font-authority hidden text-[12px] tracking-wide text-slate-600 sm:block">
-                Digital Health Innovation
-              </div>
-            </div>
-          </Link>
+    <div className="font-authority hidden text-[11px] tracking-wide text-slate-600 sm:block">
+      Digital Health Innovation
+    </div>
+  </div>
+</Link>
+
 
           {/* Desktop nav */}
           <div className="hidden md:flex h-full items-center gap-1">
@@ -164,8 +170,8 @@ export default function Navbar() {
                   <button
                     type="button"
                     className={[
-                      'inline-flex items-center gap-1 rounded-full px-4 py-2 text-sm font-semibold transition',
-                      isActive ? 'text-slate-900' : 'text-slate-600 hover:text-slate-900',
+                      'inline-flex items-center gap-1 rounded-full px-4 py-2 text-md  transition',
+                      isActive ? 'text-slate-900' : 'text-slate-600 hover:text-black',
                     ].join(' ')}
                     aria-haspopup="menu"
                     aria-expanded={isActive}
@@ -182,7 +188,7 @@ export default function Navbar() {
                   >
                     <div className="rounded-3xl border border-slate-200 bg-white p-2 shadow-2xl">
                       <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white/60 px-3 py-2 text-xs text-slate-600">
-                        <span className="font-semibold">{item.label}</span>
+                        <span className="">{item.label}</span>
                         <span className="flex items-center gap-1">
                           <Sparkles className="h-4 w-4" /> Quick access
                         </span>
@@ -196,11 +202,11 @@ export default function Navbar() {
                             className="group flex gap-4 rounded-2xl p-3 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600/30"
                           >
                             <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200 bg-white shadow-sm transition group-hover:-translate-y-0.5">
-                              <child.icon size={18} />
+                              <child.icon size={18} className="text-black" />
                             </div>
 
                             <div className="min-w-0">
-                              <div className="text-sm font-semibold text-slate-900 group-hover:text-blue-700">
+                              <div className="text-md  text-slate-900 group-hover:font-semibold">
                                 {child.label}
                               </div>
                               <div className="text-xs text-slate-500">{child.description}</div>
@@ -222,19 +228,19 @@ export default function Navbar() {
             <Link
               href="/login"
               className="
-                inline-flex items-center gap-2 rounded-full border border-slate-300
-                bg-white px-5 py-2.5 text-sm font-semibold text-slate-900 transition
-                hover:border-slate-900 hover:bg-slate-50
+                inline-flex items-center gap-2 rounded-full border border-white
+                bg-white px-5 py-2.5 text-md  text-slate-900 transition
+                hover:border-slate-300 hover:bg-slate-50
                 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600/30
               "
             >
-              <span className="font-authority tracking-wide">Log In</span>
+              <span className="font-authority tracking-wide text-black">Log In</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
 
             <Link
               href="/help"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-slate-500 transition hover:bg-slate-50 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600/30"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-slate-500 transition hover:bg-slate-50 hover:text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600/30"
               aria-label="Help"
             >
               <HelpCircle size={20} className="text-orange-500" />
@@ -245,7 +251,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setIsMobileOpen(true)}
-            className="md:hidden inline-flex h-11 w-11 items-center justify-center rounded-xl text-slate-700 transition hover:bg-slate-50 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600/30"
+            className="md:hidden inline-flex h-11 w-11 items-center justify-center rounded-xl text-slate-700 transition hover:bg-slate-50 hover:text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600/30"
             aria-label="Open menu"
             aria-expanded={isMobileOpen}
           >
@@ -281,14 +287,14 @@ export default function Navbar() {
         >
           <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3">
             <div className="min-w-0">
-              <div className="font-authority text-sm font-semibold text-slate-900">Menu</div>
+              <div className="font-authority text-md  text-slate-900">Menu</div>
               <div className="font-authority text-xs text-slate-500">AIDES-T2D</div>
             </div>
 
             <button
               type="button"
               onClick={closeMobile}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-slate-600 transition hover:bg-slate-50 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600/30"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-slate-600 transition hover:bg-slate-50 hover:text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600/30"
               aria-label="Close menu"
             >
               <X size={20} />
@@ -301,7 +307,7 @@ export default function Navbar() {
               <Link
                 href="/login"
                 onClick={closeMobile}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-teal-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-teal-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600/30"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-teal-600 px-4 py-3 text-md  text-white transition hover:bg-teal-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600/30"
               >
                 Log In <ArrowRight className="h-4 w-4" />
               </Link>
@@ -309,7 +315,7 @@ export default function Navbar() {
               <Link
                 href="/help"
                 onClick={closeMobile}
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600/30"
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-md  text-slate-700 transition hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600/30"
               >
                 <HelpCircle size={18} className="text-orange-500" /> Help
               </Link>
@@ -330,7 +336,7 @@ export default function Navbar() {
                       className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left"
                       aria-expanded={open}
                     >
-                      <span className="font-authority text-sm font-semibold text-slate-900">{section.label}</span>
+                      <span className="font-authority text-md  text-slate-900">{section.label}</span>
                       <ChevronDown className={`h-5 w-5 text-slate-500 transition ${open ? 'rotate-180' : ''}`} />
                     </button>
 
@@ -349,7 +355,7 @@ export default function Navbar() {
                               </div>
 
                               <div className="min-w-0">
-                                <div className="text-sm font-semibold text-slate-900">{child.label}</div>
+                                <div className="text-md  text-slate-900">{child.label}</div>
                                 <div className="text-xs text-slate-500">{child.description}</div>
                               </div>
 
@@ -365,7 +371,7 @@ export default function Navbar() {
             </div>
 
             <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-xs text-slate-600">
-              <div className="flex items-center gap-2 font-semibold text-slate-900">
+              <div className="flex items-center gap-2  text-slate-900">
                 <Lock className="h-4 w-4" />
                 Secure Portal
               </div>
