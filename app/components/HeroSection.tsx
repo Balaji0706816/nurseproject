@@ -124,45 +124,54 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onLoginClick }) => {
           </div>
 
           {/* Right: carousel (replaces dashboard preview card) */}
-          <HeroCarousel
+         <div className='relative overflow-hidden shadow-[0_18px_40px_rgba(2,6,23,0.22)]'>
+         <HeroCarousel
             slides={[
               {
                 imageSrc: '/images/diabetic2.jpg',
                 imageAlt: 'Enroll and access portal',
                 eyebrow: 'Step 1',
                 title: 'Enroll & access the portal',
-                description:
-                  'Sign in securely using your study enrollment information to access your private portal.',
+                description:''
+                  // 'Sign in securely using your study enrollment information to access your private portal.',
               },
               {
                 imageSrc: '/images/diabetic3.jpg',
                 imageAlt: 'Complete daily reflections',
                 eyebrow: 'Step 2',
                 title: 'Complete daily check-ins',
-                description:
-                  'Reflect on mood and distress in a few minutes each day — quick, simple, and supportive.',
+               description:''
+                  // 'Reflect on mood and distress in a few minutes each day — quick, simple, and supportive.',
               },
               {
                 imageSrc: '/images/diabetic4.jpg',
                 imageAlt: 'Guidance and progress summaries',
                 eyebrow: 'Step 3',
                 title: 'Guidance & progress summaries',
-                description:
-                  'Receive clinically aligned suggestions and review trends over time in your dashboard.',
+               description:''
+                  // 'Receive clinically aligned suggestions and review trends over time in your dashboard.',
               },
             ]}
             autoMs={4500}
           />
+         </div>
         </div>
       </div>
 
       <Feature />
 
       <SoftBackgroundSection>
+      <div className='absolute bottom-0 left-0 w-full h-[498px] bg-[#146B86] shadow-sm backdrop-blur'/>
         <div className="mx-auto max-w-7xl">
+        
           <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-3">
+
+
+  
+
+
             {/* Step 1 */}
-            <div className="flex flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white/80 shadow-sm backdrop-blur">
+            <div className="flex flex-col overflow-hidden  border border-slate-200 bg-white/80 shadow-[0_18px_40px_rgba(2,6,23,0.20)] backdrop-blur">
               <div className="relative h-80 w-full">
                 <Image
                   src="/images/diabetic2.jpg"
@@ -193,7 +202,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onLoginClick }) => {
             </div>
 
             {/* Step 2 */}
-            <div className="flex flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white/80 shadow-sm backdrop-blur">
+            <div className="flex flex-col overflow-hidden  border border-slate-200 bg-white/80 shadow-sm backdrop-blur">
               <div className="relative h-80 w-full">
                 <Image src="/images/diabetic3.jpg" alt="Daily health check-in" fill className="object-cover" />
               </div>
@@ -219,7 +228,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onLoginClick }) => {
             </div>
 
             {/* Step 3 */}
-            <div className="flex flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white/80 shadow-sm backdrop-blur">
+            <div className="flex flex-col overflow-hidden  border border-slate-200 bg-white/80 shadow-sm backdrop-blur">
               <div className="relative h-80 w-full">
                 <Image
                   src="/images/diabetic4.jpg"
@@ -250,7 +259,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onLoginClick }) => {
             </div>
           </div>
 
-          <div className="mt-14 max-w-3xl rounded-3xl border border-slate-200 bg-white/70 p-6 text-sm text-slate-600 shadow-sm backdrop-blur">
+          <div className="mt-14 max-w-3xl  border border-slate-200 bg-white/70 p-6 text-sm text-slate-600 shadow-sm backdrop-blur">
             <p>
               <span className="font-semibold text-slate-800">Privacy note:</span>{' '}
               AIDES-T2D is a university-led research study. Responses are stored securely,

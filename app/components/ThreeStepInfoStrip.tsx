@@ -42,7 +42,7 @@ export default function ThreeStepInfoStrip() {
                 <div className="pointer-events-none absolute left-0 top-8 hidden h-[calc(100%-4rem)] w-px bg-slate-300 md:block" />
               )}
 
-              <p className="text-sm font-semibold tracking-[0.18em] text-slate-700">
+              <p className="text-lg font-semibold tracking-[0.18em] text-slate-700">
                 {item.title}
               </p>
 

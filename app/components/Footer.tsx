@@ -15,10 +15,14 @@ import Image from 'next/image';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#F8FAFC] pt-24 pb-12 px-6 font-sans relative overflow-hidden text-slate-600">
+    <footer className=" bg-white pt-24   font-sans relative overflow-hidden text-slate-600">
+     
+
+      {/* <div className='absolute bottom-0 left-0 w-full h-[485px] bg-[#D6E4F2] shadow-sm backdrop-blur'/> */}
+
       
       {/* --- Fading Top Border --- */}
-      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-white to-transparent z-10 pointer-events-none"></div>
+      {/* <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-white to-transparent z-10 pointer-events-none"></div> */}
 
       {/* Background Decor - Adjusted to Blue/Teal for Medical Theme */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
@@ -26,13 +30,13 @@ const Footer = () => {
           <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-teal-100/50 rounded-full blur-3xl mix-blend-multiply"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-20">
+      <div className=" relative z-20">
         
         {/* --- 1. THE "BENTO" TOP SECTION --- */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-20 px-6">
           
           {/* Left Card: Main Participant CTA */}
-          <div className="lg:col-span-7 bg-white/80 backdrop-blur-md border border-white/60 p-10 rounded-[40px] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] relative overflow-hidden group">
+          <div className="lg:col-span-7 bg-white/80 backdrop-blur-md border border-white/60 p-10  shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] relative overflow-hidden group">
             {/* Hover Shine Effect */}
             <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
             
@@ -62,7 +66,7 @@ const Footer = () => {
           <div className="lg:col-span-5 flex flex-col gap-6">
              
              {/* Status Card - Security Focus */}
-             <div className="bg-teal-600/20 text-white p-8 rounded-[40px] shadow-xl flex-grow flex flex-col justify-between relative overflow-hidden">
+             <div className="bg-teal-600/20 text-white p-8  shadow-xl flex-grow flex flex-col justify-between relative overflow-hidden">
                 {/* Abstract Pattern */}
                 <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-teal-500 to-blue-600 opacity-20 blur-2xl rounded-full"></div>
                 
@@ -85,7 +89,7 @@ const Footer = () => {
              </div>
 
              {/* Participant Quote */}
-             <div className="bg-white p-8 rounded-[40px] border border-slate-200/60 shadow-sm">
+             <div className="bg-white p-8  border border-slate-200/60 shadow-sm">
                 <div className="flex items-center gap-1 mb-3">
                   {[1,2,3,4,5].map((i) => (
                     <div key={i} className="w-5 h-5 bg-yellow-400 rounded-sm clip-star" style={{clipPath: 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)'}}></div>
@@ -99,8 +103,10 @@ const Footer = () => {
         </div>
 
 
-        {/* --- 2. THE LINKS GRID --- */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 border-t border-slate-200 pt-16 mb-16">
+       <div className='bg-[#D6E4F2]  py-12'>
+        <div>
+           {/* --- 2. THE LINKS GRID --- */}
+         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 max-w-7xl mx-auto px-6 border-t border-slate-200 ">
           
           <div className="lg:col-span-2 pr-8">
             <div className="flex items-center gap-2 text-slate-900">
@@ -108,11 +114,11 @@ const Footer = () => {
                
                {/* <span className="font-bold text-xl tracking-tight">AIDES-T2D</span> */}
             </div>
-            <p className="text-slate-500 mb-6 text-sm leading-relaxed">
+            <p className="text-slate-500  text-sm leading-relaxed">
               An AI-supported intervention for Distress in Type 2 Diabetes. 
               Conducted by the PCRG Lab at UMass Boston.
             </p>
-            <div className="flex gap-4">
+            <div className="flex gap-4 mt-6">
               <a href="#" className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:text-blue-600 hover:border-blue-200 transition-all" aria-label="Lab Website"><Globe size={18} /></a>
               <a href="#" className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:text-blue-700 hover:border-blue-700 transition-all" aria-label="LinkedIn"><Linkedin size={18} /></a>
               <a href="mailto:pcrg@umb.edu" className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:text-slate-900 hover:border-slate-400 transition-all" aria-label="Email"><Mail size={18} /></a>
@@ -151,10 +157,12 @@ const Footer = () => {
         </div>
 
         {/* --- 3. BOTTOM BAR --- */}
-        <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-slate-200 text-xs text-slate-400">
+        <div className="flex px-6 max-w-7xl mx-auto  flex-col md:flex-row justify-between items-center pt-8 border-t border-slate-200 text-xs text-slate-400">
            <p>© 2026 University of Massachusetts Boston. All rights reserved.</p>
            <p className="mt-2 md:mt-0">IRB Protocol #2024-001</p>
         </div>
+        </div>
+       </div>
 
       </div>
     </footer>

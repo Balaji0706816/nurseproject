@@ -61,7 +61,7 @@ export default function HeroCarousel({
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
-      <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_20px_60px_rgba(15,23,42,0.10)]">
+      <div className="relative overflow-hidden  border border-slate-200 bg-white shadow-[0_20px_60px_rgba(15,23,42,0.10)]">
         {/* Image */}
         <div
           className="relative aspect-[16/11] w-full sm:aspect-[16/10]"
@@ -120,9 +120,9 @@ export default function HeroCarousel({
             </div>
 
             {/* Progress bar */}
-            <div className="mt-4 h-1 w-full overflow-hidden rounded-full bg-white/15">
+            <div className="mt-4 h-0.5 w-full overflow-hidden rounded-full bg-gradient-to-r from-white/20 via-white/5 to-white/20 shadow-inner">
               <div
-                className="h-full rounded-full bg-white/70 transition-[width] duration-500"
+                className="h-full rounded-full bg-gradient-to-r from-blue-400 via-indigo-300 to-teal-200 shadow-[0_0_8px_1px_rgba(59,130,246,0.30)] transition-all duration-500"
                 style={{ width: `${progressPct}%` }}
               />
             </div>
