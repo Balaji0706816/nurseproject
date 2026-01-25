@@ -22,7 +22,7 @@ interface HeroSectionProps {
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onLoginClick }) => {
   return (
-    <section className="relative w-full min-h-screen overflow-hidden text-slate-900 selection:bg-blue-50 selection:text-blue-900">
+    <section className="relative pt-4 w-full min-h-screen overflow-hidden text-slate-900 selection:bg-blue-50 selection:text-blue-900">
       {/* Background */}
       <div className="pointer-events-none absolute inset-0">
         {/* Soft grid */}
