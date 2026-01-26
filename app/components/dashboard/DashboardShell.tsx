@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import SourcesPanel from "@/app/components/SourcesPanel";
-import StudioPanel from "@/app/components/StudioPanel";  
-import type { SourceItem } from "@/app/components/types";
+import SourcesPanel from "@/app/components/dashboard/SourcesPanel";
+import StudioPanel from "@/app/components/dashboard/StudioPanel";  
+import type { SourceItem } from "@/app/components/dashboard/types";
 
 import { MoreHorizontal, SlidersHorizontal } from "lucide-react";
 
 // ✅ Reusable center modes
-import TextChat from "@/app/components/TextChat";
-import VoiceBot from "@/app/components/VoiceBot";
+import TextChat from "@/app/components/dashboard/TextChat";
+import VoiceBot from "@/app/components/dashboard/VoiceBot";
 
 // ✅ Your check-in modal content
 // import CheckInModalContent from "./checkin"; // ✅ adjust path if needed

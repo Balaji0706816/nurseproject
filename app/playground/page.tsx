@@ -1,4 +1,4 @@
-import DashboardShell from "@/app/components/DashboardShell";
+import DashboardShell from "@/app/components/dashboard/DashboardShell";
 
 export default function PlaygroundPage() {
   return (

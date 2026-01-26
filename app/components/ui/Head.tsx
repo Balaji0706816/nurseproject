@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { HeroSection } from './HeroSection';
 import { LoginModal } from './LoginModal';
-import { AppView } from '../types';
+import { AppView } from '@/app/types'; 
 
 export default function Herohead() {
   const [currentView, setCurrentView] = useState<AppView>(AppView.HERO);

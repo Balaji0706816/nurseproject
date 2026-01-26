@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Head from "./components/Head";
-import ChevronPromoCard from "./components/ChevronPromoCard";
+import Head from "./components/ui/Head";
+import ChevronPromoCard from "./components/ui/ChevronPromoCard";
 
 export default function Home() {
   return (

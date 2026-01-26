@@ -12,7 +12,7 @@ import {
   PanelLeftOpen,
   ChevronRight,
 } from "lucide-react";
-import type { SourceItem } from "@/app/components/types";
+import type { SourceItem } from "@/app/components/dashboard/types";
 
 function PanelCard({
   title,
