@@ -36,12 +36,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${authorityFont.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${authorityFont.variable} bg-white font-sans`}
     >
-      <body className="antialiased bg-white font-sans">
-       
+      <body className="antialiased">
+        {/* <Navbar /> */}
         {children}
-      
+        {/* <Footer /> */}
       </body>
     </html>
   );
