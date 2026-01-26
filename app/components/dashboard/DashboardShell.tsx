@@ -1,23 +1,21 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import SourcesPanel from "@/app/components/dashboard/SourcesPanel";
-import StudioPanel from "@/app/components/dashboard/StudioPanel";  
+import StudioPanel from "@/app/components/dashboard/StudioPanel";
 import type { SourceItem } from "@/app/components/dashboard/types";
 
 import { MoreHorizontal, SlidersHorizontal } from "lucide-react";
 
-// ✅ Reusable center modes
+// Center modes
 import TextChat from "@/app/components/dashboard/TextChat";
 import VoiceBot from "@/app/components/dashboard/VoiceBot";
 
-// ✅ Your check-in modal content
-// import CheckInModalContent from "./checkin"; // ✅ adjust path if needed
-
-// ✅ Pull latest check-in after submit (updates StudioPanel graph)
+// Pull latest check-in
 import { getLastCheckIn } from "@/app/lib/store";
 
 type Mode = "text" | "voice";
+type MobileTab = "sources" | "stampley" | "studio";
 
 function cn(...xs: Array<string | false | null | undefined>) {
   return xs.filter(Boolean).join(" ");
@@ -32,6 +30,8 @@ type LastCheckIn = {
 
 /** -----------------------------
  * Presentational wrapper
+ * - Responsive height (no fixed 740px)
+ * - Works inside flex/grid with min-h-0
  * ----------------------------- */
 function PanelCard({
   title,
@@ -45,23 +45,23 @@ function PanelCard({
   right?: React.ReactNode;
 }) {
   return (
-    <section className="h-[740px] min-w-0 rounded-2xl border border-slate-200 bg-white shadow-sm">
+    <section className="min-h-0 w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
       <header className="flex items-start justify-between gap-3 border-b border-slate-100 px-4 py-3 sm:px-5">
         <div className="min-w-0">
           <div className="text-sm font-semibold text-slate-900">{title}</div>
           {subtitle ? <div className="mt-0.5 text-xs text-slate-500">{subtitle}</div> : null}
         </div>
-
         <div className="shrink-0">{right}</div>
       </header>
 
-      <div className="flex h-[calc(100%-52px)] flex-col px-4 pb-4 pt-4 sm:px-5 sm:pb-5">{children}</div>
+      {/* critical: min-h-0 so inner scroll regions can work */}
+      <div className="min-h-0 flex flex-col px-4 pb-4 pt-4 sm:px-5 sm:pb-5">{children}</div>
     </section>
   );
 }
 
 /** -----------------------------
- * Center Panel (mode switch in header)
+ * Center Panel (mode switch)
  * ----------------------------- */
 function StampleyCenterPanel({ sourcesCount }: { sourcesCount: number }) {
   const [mode, setMode] = useState<Mode>("text");
@@ -69,10 +69,10 @@ function StampleyCenterPanel({ sourcesCount }: { sourcesCount: number }) {
   return (
     <PanelCard
       title="Stampley"
-      subtitle="Same panel — switch between Text Chat and Voice Bot"
+      subtitle="Switch between Text Chat and Voice Bot"
       right={
         <div className="flex items-center gap-2">
-          {/* Mode switch in header */}
+          {/* Mode switch */}
           <div className="inline-flex rounded-full border border-slate-200 bg-white p-1 shadow-sm">
             <button
               type="button"
@@ -96,7 +96,6 @@ function StampleyCenterPanel({ sourcesCount }: { sourcesCount: number }) {
             </button>
           </div>
 
-          {/* Header actions */}
           <button
             type="button"
             className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-[0_1px_0_rgba(15,23,42,0.04)] hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
@@ -117,7 +116,6 @@ function StampleyCenterPanel({ sourcesCount }: { sourcesCount: number }) {
         </div>
       }
     >
-      {/* tiny status row */}
       <div className="mb-3 flex items-center justify-between text-xs text-slate-500">
         <span>
           Mode: <span className="font-semibold text-slate-700">{mode === "text" ? "Text Chat" : "Voice Bot"}</span>
@@ -127,8 +125,8 @@ function StampleyCenterPanel({ sourcesCount }: { sourcesCount: number }) {
         </span>
       </div>
 
-      {/* Same space (reused components) */}
-      <div className="flex flex-1 min-h-0 flex-col">
+      {/* Fill remaining height and allow internal scroll */}
+      <div className="min-h-0 flex flex-1 flex-col">
         {mode === "text" ? <TextChat endpoint="/api/chat" /> : <VoiceBot endpoint="/api/voice" />}
       </div>
     </PanelCard>
@@ -136,45 +134,41 @@ function StampleyCenterPanel({ sourcesCount }: { sourcesCount: number }) {
 }
 
 /** -----------------------------
- * Simple modal shell (no external libs)
+ * Mobile tab switcher (Google Notes vibe)
  * ----------------------------- */
-function Modal({
-  open,
-  title,
-  onClose,
-  children,
+function MobileTabs({
+  tab,
+  setTab,
 }: {
-  open: boolean;
-  title: string;
-  onClose: () => void;
-  children: React.ReactNode;
+  tab: MobileTab;
+  setTab: (t: MobileTab) => void;
 }) {
-  if (!open) return null;
-
   return (
-    <div className="fixed inset-0 z-[80]">
-      {/* Backdrop */}
-      <button type="button" aria-label="Close modal" onClick={onClose} className="absolute inset-0 bg-black/40" />
-
-      {/* Dialog */}
-      <div className="absolute inset-0 flex items-end justify-center p-4 sm:items-center">
-        <div className="w-full max-w-3xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
-          <div className="flex items-start justify-between gap-3 border-b border-slate-100 px-4 py-3">
-            <div className="min-w-0">
-              <div className="text-sm font-semibold text-slate-900">{title}</div>
-              <div className="mt-0.5 text-xs text-slate-500">Quick, honest, low pressure</div>
-            </div>
-
-            <button
-              type="button"
-              onClick={onClose}
-              className="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
-            >
-              Close
-            </button>
+    <div className="md:hidden sticky top-0 z-30 bg-slate-50/90 backdrop-blur-xl">
+      <div className="mx-auto max-w-7xl px-4 pt-3">
+        <div className="rounded-2xl border border-slate-200 bg-white/80 p-1 shadow-sm">
+          <div className="grid grid-cols-3 gap-1">
+            {[
+              { id: "sources", label: "Sources" },
+              { id: "stampley", label: "Stampley" },
+              { id: "studio", label: "Studio" },
+            ].map((x) => {
+              const active = tab === (x.id as MobileTab);
+              return (
+                <button
+                  key={x.id}
+                  type="button"
+                  onClick={() => setTab(x.id as MobileTab)}
+                  className={cn(
+                    "rounded-xl px-3 py-2 text-xs font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600/30",
+                    active ? "bg-slate-900 text-white" : "text-slate-700 hover:bg-slate-50"
+                  )}
+                >
+                  {x.label}
+                </button>
+              );
+            })}
           </div>
-
-          <div className="max-h-[80vh] overflow-y-auto p-4 sm:p-5">{children}</div>
         </div>
       </div>
     </div>
@@ -182,48 +176,55 @@ function Modal({
 }
 
 /** -----------------------------
- * DashboardShell
+ * DashboardShell (Responsive like Google Notes)
  * ----------------------------- */
 export default function DashboardShell() {
   const [sources, setSources] = useState<SourceItem[]>([]);
   const sourcesCount = useMemo(() => sources.length, [sources]);
 
-  // Collapses so grid can reflow
+  // Desktop collapses
   const [sourcesCollapsed, setSourcesCollapsed] = useState(false);
   const [studioCollapsed, setStudioCollapsed] = useState(false);
 
-  // ✅ Check-in modal state
-  const [checkInOpen, setCheckInOpen] = useState(false);
+  // Mobile: tabbed single-panel view
+  const [mobileTab, setMobileTab] = useState<MobileTab>("stampley");
 
-  // ✅ Latest check-in in state (StudioPanel graph reads THIS → auto-updates)
+  // Latest check-in
   const [lastCheckIn, setLastCheckIn] = useState<LastCheckIn>(() => (getLastCheckIn?.() ?? null) as LastCheckIn);
 
-  function addMockSource() {
+  const addMockSource = useCallback(() => {
     const next: SourceItem = {
       id: crypto.randomUUID(),
       title: `Untitled source ${sources.length + 1}`,
       kind: "other",
     };
     setSources((prev) => [next, ...prev]);
-  }
+  }, [sources.length]);
 
-  function removeSource(id: string) {
+  const removeSource = useCallback((id: string) => {
     setSources((prev) => prev.filter((s) => s.id !== id));
-  }
+  }, []);
 
-  // ✅ Called after submit in CheckInModalContent
-  function handleCheckInDone() {
-    setLastCheckIn((getLastCheckIn?.() ?? null) as LastCheckIn); // ✅ refresh graph data
-    setCheckInOpen(false); // ✅ close modal
-  }
+  // Close/normalize desktop collapse states when going to phone
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth < 768) {
+        // on mobile we rely on tabs, keep panels expanded to avoid weird UI
+        setSourcesCollapsed(false);
+        setStudioCollapsed(false);
+      }
+    };
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   /**
-   * FIXES:
-   * - Use minmax(0, 1fr) for center so it can shrink without overflow.
-   * - Use minmax(280px, 360px) for side panels so they can shrink a bit.
-   * - Keep rails at 56px.
+   * Desktop grid cols
+   * - lg: 3 columns, with collapsible rails (56px)
+   * - md: 2 columns (center + right) to stay readable
    */
-  const gridCols =
+  const desktopCols =
     sourcesCollapsed && studioCollapsed
       ? "lg:grid-cols-[56px_minmax(0,1fr)_56px]"
       : sourcesCollapsed && !studioCollapsed
@@ -233,39 +234,58 @@ export default function DashboardShell() {
       : "lg:grid-cols-[minmax(280px,360px)_minmax(0,1fr)_minmax(280px,360px)]";
 
   return (
-    <div className="h-screen max-w-full mx-auto overflow-hidden">
-      <div className={`grid h-full w-full gap-4 p-4 ${gridCols}`}>
-        {/* Left */}
-        <div className="min-w-0">
-          <SourcesPanel
-            sources={sources}
-            onAddSource={addMockSource}
-            onRemoveSource={removeSource}
-            collapsed={sourcesCollapsed}
-            onCollapsedChange={setSourcesCollapsed}
-          />
-        </div>
+    <div className="min-h-dvh w-full bg-slate-50">
+      {/* Mobile tabs (sticky) */}
+      <MobileTabs tab={mobileTab} setTab={setMobileTab} />
 
-        {/* Center */}
-        <div className="min-w-0">
-          <StampleyCenterPanel sourcesCount={sourcesCount} />
-        </div>
+      {/* Outer padding */}
+      <div className="mx-auto max-w-[1600px] px-4 pb-4 pt-4 md:px-6 md:pb-6 md:pt-6">
+        {/* GRID:
+            - Mobile: 1 column (tab decides what shows)
+            - md: 2 columns (center + studio) like Notes "main + detail"
+            - lg: 3 columns
+        */}
+        <div className={cn("grid min-h-[calc(100dvh-96px)] gap-4 md:min-h-[calc(100dvh-48px)]", "grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(320px,380px)]", desktopCols)}>
+          {/* LEFT (Desktop only) */}
+          <div className={cn("min-w-0", "hidden lg:block")}>
+            <SourcesPanel
+              sources={sources}
+              onAddSource={addMockSource}
+              onRemoveSource={removeSource}
+              collapsed={sourcesCollapsed}
+              onCollapsedChange={setSourcesCollapsed}
+            />
+          </div>
 
-        {/* Right */}
-        <div className="min-w-0">
-          <StudioPanel
-            collapsed={studioCollapsed}
-            onCollapsedChange={setStudioCollapsed}
-            onOpenCheckIn={() => setCheckInOpen(true)}
-            lastCheckIn={lastCheckIn} // ✅ NEW: drives the radar graph
-          />
+          {/* CENTER (Always on md+, mobile depends on tab) */}
+          <div className={cn("min-w-0", mobileTab === "stampley" ? "block" : "hidden md:block")}>
+            <StampleyCenterPanel sourcesCount={sourcesCount} />
+          </div>
+
+          {/* RIGHT (md+ always visible, mobile depends on tab) */}
+          <div className={cn("min-w-0", mobileTab === "studio" ? "block" : "hidden md:block")}>
+            <StudioPanel
+              collapsed={studioCollapsed}
+              onCollapsedChange={setStudioCollapsed}
+              onOpenCheckIn={() => {
+                /* hook your modal here if needed */
+              }}
+              lastCheckIn={lastCheckIn}
+            />
+          </div>
+
+          {/* MOBILE SOURCES (only on phone tab) */}
+          <div className={cn("min-w-0 lg:hidden", mobileTab === "sources" ? "block" : "hidden")}>
+            <SourcesPanel
+              sources={sources}
+              onAddSource={addMockSource}
+              onRemoveSource={removeSource}
+              collapsed={false}
+              onCollapsedChange={() => {}}
+            />
+          </div>
         </div>
       </div>
-
-      {/* ✅ Check-in modal (opens from StudioPanel button) */}
-      {/* <Modal open={checkInOpen} title="Daily Check-In" onClose={() => setCheckInOpen(false)}>
-        <CheckInModalContent onDone={handleCheckInDone} />
-      </Modal> */}
     </div>
   );
 }
