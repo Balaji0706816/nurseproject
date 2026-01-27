@@ -12,7 +12,7 @@ import TextChat from "@/app/components/dashboard/TextChat";
 import VoiceBot from "@/app/components/dashboard/VoiceBot";
 
 // Pull latest check-in
-import { getLastCheckIn } from "@/app/lib/store";
+import { getLastCheckIn } from "@/lib/store";
 
 type Mode = "text" | "voice";
 
