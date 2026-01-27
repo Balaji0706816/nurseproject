@@ -1,8 +1,12 @@
+
+import ChatNavbar from "@/app/components/dashboard/ChatNavbar2";
 // src/app/(dashboard)/dashboard/page.tsx
 export default function DashboardPage() {
     return (
-      <div className="space-y-6">
-        <header className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+      <div className="">
+        <ChatNavbar/>
+       <div className="space-y-6">
+       <header className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h1 className="text-xl font-semibold text-slate-900 sm:text-2xl">
               Overview
@@ -53,6 +57,7 @@ export default function DashboardPage() {
   
           <div className="mt-2 text-xs font-medium text-slate-600">62%</div>
         </section>
+       </div>
       </div>
     );
   }

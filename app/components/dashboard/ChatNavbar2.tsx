@@ -5,7 +5,7 @@ import React from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
-  ChevronLeft,
+  ChevronRight,
   ShieldCheck,
   Info,
   Settings,
@@ -109,21 +109,21 @@ export default function ChatNavbar({
               aria-label="Back"
               title="Back"
             >
-              <ChevronLeft className="h-5 w-5" />
+              <ChevronRight className="h-5 w-5" />
             </Link>
           ) : (
             <button
               type="button"
-              onClick={() => router.back()}
+              onClick={() => router.push('/dashboard/playground')}
               className="inline-flex cursor-pointer h-10 w-10 hover:text-white  items-center justify-center rounded-xl border border-transparent hover:border-yellow-500 bg-white text-slate-700 shadow-[0_1px_0_rgba(15,23,42,0.04)] hover:bg-blue-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
               aria-label="Back"
               title="Back"
             >
-              <ChevronLeft className="h-5 w-5 hover:scale-110 transition-all duration-300  cursor-pointer" />
+              <ChevronRight className="h-5 w-5  hover:scale-110 transition-all duration-300  cursor-pointer"  />
             </button>
           )}
 
-          <div className="min-w-0">
+          <Link href="/" className="min-w-0">
             <Image src="/images/stampley_logo.webp" alt="Stampley Logo" width={170} height={170} />
             {/* <div className="flex items-center gap-2">
               <span className="truncate text-sm font-semibold text-slate-900">
@@ -135,7 +135,7 @@ export default function ChatNavbar({
               </span>
             </div> */}
             {/* <div className="truncate text-[11px] text-slate-500">{subtitle}</div> */}
-          </div>
+          </Link>
         </div>
 
         {/* Middle: context pills */}
