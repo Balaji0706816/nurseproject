@@ -3,14 +3,8 @@
 
 import React from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import {
-  ChevronLeft,
-  ShieldCheck,
-  Info,
-  Settings,
-  MoreHorizontal,
-} from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ChevronLeft, Info, Settings, MoreHorizontal, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 
 function cn(...xs: Array<string | false | null | undefined>) {
@@ -24,6 +18,111 @@ type ChatMeta = {
   missedDay?: boolean;
   endOfWeek?: boolean;
 };
+
+function scoreTone(score: number) {
+  if (score <= 3) {
+    return {
+      pill: "border-emerald-200/70 bg-emerald-50/80 text-emerald-800",
+      dot: "bg-emerald-500",
+      label: "Low",
+    };
+  }
+  if (score <= 6) {
+    return {
+      pill: "border-amber-200/70 bg-amber-50/80 text-amber-800",
+      dot: "bg-amber-500",
+      label: "Moderate",
+    };
+  }
+  return {
+    pill: "border-rose-200/70 bg-rose-50/80 text-rose-800",
+    dot: "bg-rose-500",
+    label: "High",
+  };
+}
+
+function Pill({
+  className,
+  children,
+  title,
+}: {
+  className?: string;
+  children: React.ReactNode;
+  title?: string;
+}) {
+  return (
+    <span
+      title={title}
+      className={cn(
+        "inline-flex items-center gap-2 rounded-full border px-2.5 py-1 text-[11px] font-semibold",
+        "backdrop-blur supports-[backdrop-filter]:bg-white/60",
+        className
+      )}
+    >
+      {children}
+    </span>
+  );
+}
+
+function IconBtn({
+  onClick,
+  label,
+  children,
+  className,
+}: {
+  onClick?: () => void;
+  label: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={label}
+      title={label}
+      className={cn(
+        "inline-flex h-10 w-10 items-center justify-center rounded-xl border",
+        "border-slate-200/70 bg-white/70 text-slate-700",
+        "shadow-[0_1px_0_rgba(15,23,42,0.04)]",
+        "hover:bg-slate-50 hover:text-slate-900",
+        "focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300",
+        "transition",
+        className
+      )}
+    >
+      {children}
+    </button>
+  );
+}
+
+function ActionBtn({
+  onClick,
+  label,
+  icon,
+}: {
+  onClick?: () => void;
+  label: string;
+  icon: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        "hidden sm:inline-flex h-10 items-center gap-2 rounded-xl border px-3",
+        "border-slate-200/70 bg-white/70 text-slate-700",
+        "shadow-[0_1px_0_rgba(15,23,42,0.04)]",
+        "hover:bg-slate-50 hover:text-slate-900",
+        "focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300",
+        "transition"
+      )}
+    >
+      {icon}
+      <span className="text-sm font-semibold">{label}</span>
+    </button>
+  );
+}
 
 export default function ChatNavbar({
   title = "Stampley",
@@ -39,186 +138,171 @@ export default function ChatNavbar({
   meta?: ChatMeta;
   onOpenInfo?: () => void;
   onOpenSettings?: () => void;
-  backHref?: string; // if not provided -> router.back()
+  backHref?: string;
   className?: string;
 }) {
-  const pathname = usePathname();
   const router = useRouter();
 
   const score = meta?.distressScore;
-  const scoreLabel =
-    typeof score === "number"
-      ? score <= 3
-        ? "Low"
-        : score <= 6
-        ? "Moderate"
-        : "High"
-      : undefined;
-
-  const scorePill = (() => {
-    if (typeof score !== "number") return null;
-    const base =
-      "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold";
-    if (score <= 3)
-      return (
-        <span className={cn(base, "border-emerald-200 bg-emerald-50 text-emerald-700")}>
-          Distress: {score} • {scoreLabel}
-        </span>
-      );
-    if (score <= 6)
-      return (
-        <span className={cn(base, "border-amber-200 bg-amber-50 text-amber-700")}>
-          Distress: {score} • {scoreLabel}
-        </span>
-      );
-    return (
-      <span className={cn(base, "border-rose-200 bg-rose-50 text-rose-700")}>
-        Distress: {score} • {scoreLabel}
-      </span>
-    );
-  })();
+  const scoreUI = typeof score === "number" ? scoreTone(score) : null;
 
   const dayPill =
     meta?.day != null ? (
-      <span className="inline-flex items-center rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-700">
-        Day {meta.day}
-      </span>
+      <Pill className="border-slate-200/70 bg-white/70 text-slate-700" title="Study day">
+        <span className="h-1.5 w-1.5 rounded-full bg-slate-400" />
+        Day <span className="tabular-nums">{meta.day}</span>
+      </Pill>
     ) : null;
 
   const domainPill =
     meta?.domain ? (
-      <span className="hidden sm:inline-flex items-center rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-700">
+      <Pill
+        className="hidden sm:inline-flex border-slate-200/70 bg-white/70 text-slate-700"
+        title="Weekly focus domain"
+      >
+        <span className="h-1.5 w-1.5 rounded-full bg-slate-400" />
         {meta.domain}
-      </span>
+      </Pill>
+    ) : null;
+
+  const scorePill =
+    scoreUI && typeof score === "number" ? (
+      <Pill
+        className={cn("border", scoreUI.pill)}
+        title={`Distress score: ${score}/10`}
+      >
+        <span className={cn("h-1.5 w-1.5 rounded-full", scoreUI.dot)} />
+        Distress <span className="tabular-nums">{score}</span>
+        <span className="text-slate-500/70">•</span>
+        {scoreUI.label}
+      </Pill>
+    ) : null;
+
+  const flagPills =
+    meta?.missedDay || meta?.endOfWeek ? (
+      <div className="hidden md:flex items-center gap-2">
+        {meta?.missedDay ? (
+          <Pill className="border-slate-200/70 bg-slate-50/80 text-slate-700" title="Participant missed a day">
+            <span className="h-1.5 w-1.5 rounded-full bg-slate-400" />
+            Missed day
+          </Pill>
+        ) : null}
+        {meta?.endOfWeek ? (
+          <Pill className="border-slate-200/70 bg-slate-50/80 text-slate-700" title="End of week">
+            <span className="h-1.5 w-1.5 rounded-full bg-slate-400" />
+            End of week
+          </Pill>
+        ) : null}
+      </div>
     ) : null;
 
   return (
-    <div
+    <header
       className={cn(
-        "sticky top-0 z-30 w-full border-b border-slate-200 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/70",
+        "sticky top-0 z-30 w-full",
+        "border-b border-slate-200/70",
+        "bg-white/75 backdrop-blur supports-[backdrop-filter]:bg-white/65",
         className
       )}
     >
-      <div className="mx-auto flex w-full max-w-full items-center justify-between gap-3 px-6 py-2.5 sm:px-">
-        {/* Left: Back + Title */}
+      {/* subtle top highlight */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-slate-200/70 to-transparent" />
+
+      <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-3 py-2.5 sm:px-6">
+        {/* Left */}
         <div className="flex min-w-0 items-center gap-2">
           {backHref ? (
             <Link
               href={backHref}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-[0_1px_0_rgba(15,23,42,0.04)] hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
+              className={cn(
+                "inline-flex h-10 w-10 items-center justify-center rounded-xl border",
+                "border-slate-200/70 bg-white/70 text-slate-700",
+                "shadow-[0_1px_0_rgba(15,23,42,0.04)]",
+                "hover:bg-slate-50 hover:text-slate-900",
+                "focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300",
+                "transition"
+              )}
               aria-label="Back"
               title="Back"
             >
               <ChevronLeft className="h-5 w-5" />
             </Link>
           ) : (
-            <button
-              type="button"
+            <IconBtn
+              label="Back"
               onClick={() => router.back()}
-              className="inline-flex cursor-pointer h-10 w-10 hover:text-white  items-center justify-center rounded-xl border border-transparent hover:border-yellow-500 bg-white text-slate-700 shadow-[0_1px_0_rgba(15,23,42,0.04)] hover:bg-blue-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
-              aria-label="Back"
-              title="Back"
+              className="hover:shadow-sm"
             >
-              <ChevronLeft className="h-5 w-5 hover:scale-110 transition-all duration-300  cursor-pointer" />
-            </button>
+              <ChevronLeft className="h-5 w-5" />
+            </IconBtn>
           )}
 
           <div className="min-w-0">
-            <Image src="/images/stampley_logo.webp" alt="Stampley Logo" width={170} height={170} />
-            {/* <div className="flex items-center gap-2">
-              <span className="truncate text-sm font-semibold text-slate-900">
-                {title}
-              </span>
-              <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-[10px] font-semibold text-slate-700">
-                <ShieldCheck className="h-3.5 w-3.5" />
-                Private
-              </span>
-            </div> */}
-            {/* <div className="truncate text-[11px] text-slate-500">{subtitle}</div> */}
+            <Link href="/" className="flex items-center gap-2 min-w-0">
+              <Image
+                src="/images/stampley_logo.webp"
+                alt="Stampley"
+                width={140}
+                height={44}
+                className="h-10 w-auto"
+                priority
+              />
+              <span className="sr-only">{title}</span>
+            </Link>
+
+            {/* optional subtitle (kept clean + modern) */}
+           
           </div>
         </div>
 
-        {/* Middle: context pills */}
+        {/* Middle pills */}
         <div className="hidden md:flex items-center gap-2">
           {dayPill}
           {domainPill}
           {scorePill}
-          {meta?.missedDay ? (
-            <span className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] font-semibold text-slate-700">
-              Missed day
-            </span>
-          ) : null}
-          {meta?.endOfWeek ? (
-            <span className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] font-semibold text-slate-700">
-              End of week
-            </span>
-          ) : null}
+          {flagPills}
         </div>
 
-        {/* Right: actions */}
+        {/* Right actions */}
         <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={onOpenInfo}
-            className="hidden sm:inline-flex h-10 items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-700 shadow-[0_1px_0_rgba(15,23,42,0.04)] hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
-          >
-            <Info className="h-4 w-4" />
-            Info
-          </button>
+          <ActionBtn onClick={onOpenInfo} label="Info" icon={<Info className="h-4 w-4" />} />
+          <ActionBtn onClick={onOpenSettings} label="Settings" icon={<Settings className="h-4 w-4" />} />
 
-          <button
-            type="button"
-            onClick={onOpenSettings}
-            className="hidden sm:inline-flex h-10 items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-700 shadow-[0_1px_0_rgba(15,23,42,0.04)] hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
-          >
-            <Settings className="h-4 w-4" />
-            Settings
-          </button>
-
-          {/* Mobile compact */}
+          {/* Mobile icons */}
           <div className="sm:hidden flex items-center gap-2">
-            <button
-              type="button"
-              onClick={onOpenInfo}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-[0_1px_0_rgba(15,23,42,0.04)] hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
-              aria-label="Info"
-              title="Info"
-            >
+            <IconBtn label="Info" onClick={onOpenInfo}>
               <Info className="h-4 w-4" />
-            </button>
-            <button
-              type="button"
-              onClick={onOpenSettings}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-[0_1px_0_rgba(15,23,42,0.04)] hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
-              aria-label="Settings"
-              title="Settings"
-            >
+            </IconBtn>
+            <IconBtn label="Settings" onClick={onOpenSettings}>
               <Settings className="h-4 w-4" />
-            </button>
+            </IconBtn>
           </div>
 
-          {/* Optional overflow (placeholder) */}
-          <button
-            type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-[0_1px_0_rgba(15,23,42,0.04)] hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
-            aria-label="More"
-            title="More"
-          >
+          <IconBtn label="More">
             <MoreHorizontal className="h-4 w-4" />
-          </button>
+          </IconBtn>
         </div>
       </div>
 
       {/* Mobile pills row */}
       {(meta?.day != null || meta?.domain || typeof meta?.distressScore === "number") && (
-        <div className="md:hidden border-t border-slate-100 bg-white/70">
-          <div className="mx-auto flex w-full max-w-5xl items-center gap-2 overflow-x-auto px-3 py-2 sm:px-4">
+        <div className="md:hidden border-t border-slate-100/70 bg-white/60">
+          <div className="mx-auto flex w-full max-w-6xl items-center gap-2 overflow-x-auto px-3 py-2 sm:px-6">
             {dayPill}
-            {domainPill}
+            {/* show domain on mobile too */}
+            {meta?.domain ? (
+              <Pill className="border-slate-200/70 bg-white/70 text-slate-700">{meta.domain}</Pill>
+            ) : null}
             {scorePill}
+            {meta?.missedDay ? (
+              <Pill className="border-slate-200/70 bg-slate-50/80 text-slate-700">Missed day</Pill>
+            ) : null}
+            {meta?.endOfWeek ? (
+              <Pill className="border-slate-200/70 bg-slate-50/80 text-slate-700">End of week</Pill>
+            ) : null}
           </div>
         </div>
       )}
-    </div>
+    </header>
   );
 }
