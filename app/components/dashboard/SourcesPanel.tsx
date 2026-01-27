@@ -26,10 +26,10 @@ function PanelCard({
   right?: React.ReactNode;
 }) {
   return (
-    <section className="h-full rounded-2xl border border-slate-200 bg-white shadow-sm">
+    <section className=" rounded-2xl border border-slate-200 bg-white shadow-sm">
       <header className="flex items-start justify-between gap-3 border-b border-slate-100 px-4 py-3">
         <div className="min-w-0">
-          <div className="text-sm font-semibold text-slate-900">{title}</div>
+          <div className="text-lg  text-black">{title}</div>
           {subtitle ? (
             <div className="mt-0.5 text-xs text-slate-500">{subtitle}</div>
           ) : null}
@@ -61,10 +61,10 @@ export default function SourcesPanel({
       className={[
         "w-full min-w-0",
         "transition-[width] duration-300 ease-out",
-        collapsed ? "lg:w-14" : "lg:w-[360px]",
+        collapsed ? "h-full" : "md:h-[800px] h-[740px]",
       ].join(" ")}
     >
-      <div className="flex h-full flex-col gap-4 ">
+      <div className="flex h-full flex-col gap-4  ">
         <PanelCard
         
           title={collapsed ? "" : "Sources"}
@@ -75,18 +75,18 @@ export default function SourcesPanel({
              <button
                 type="button"
                 onClick={() => onCollapsedChange(!collapsed)}
-                className=" text-slate-700 shadow-[0_1px_0_rgba(15,23,42,0.04)] hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
+                className=" text-slate-700 shadow-[0_1px_0_rgba(15,23,42,0.04)]  focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
                 aria-label={collapsed ? "Expand Sources panel" : "Collapse Sources panel"}
                 aria-expanded={!collapsed}
                 aria-controls={regionId}
                 title={collapsed ? "Expand" : "Collapse"}
               >
                 {collapsed ? (
-                 <div className="bg-slate-50 p-2 rounded-full border border-slate-200 hover:bg-slate-100 cursor-pointer hover:scale-105 transition-all duration-300 -translate-x-3 flex items-center justify-center">
+                 <div className="p-2  cursor-pointer hover:scale-105 transition-all duration-300 -translate-x-3 flex items-center justify-center">
                    <PanelLeftOpen className="h-5 w-5 " />
                  </div>
                 ) : (
-                  <div className="bg-slate-50  p-2 rounded-full  border border-slate-200 hover:bg-slate-100 cursor-pointer hover:scale-105 transition-all duration-300 flex items-center justify-center traslate-x-[-20px]"> <PanelLeftClose className="h-5 w-5 " /></div>
+                  <div className=" md:block hidden  p-2  cursor-pointer hover:scale-105 transition-all duration-300 flex items-center justify-center  traslate-x-[-20px]"> <PanelLeftClose className="h-5 w-5 " /></div>
                 )}  
               </button>
             </div>

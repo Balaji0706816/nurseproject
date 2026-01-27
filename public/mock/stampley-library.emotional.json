@@ -1,0 +1,20 @@
+{
+    "domain": "Emotional",
+    "items": [
+      {
+        "id": "emo_energy_day2_simple",
+        "subscaleItem": "Feeling that diabetes is taking up too much of my mental and physical energy every day",
+        "conversationType": "Simple",
+        "distress": { "min": 0, "max": 4 },
+        "stampleyPrompt": "Did it feel like diabetes took up a lot of your energy today — mentally or physically?",
+        "possibleResponses": ["Yes", "No"],
+        "validationLine": "It’s understandable to feel drained — diabetes requires constant attention.",
+        "microSkill": "Box Breathing",
+        "skillObjective": "Regulate stress and reset focus when energy feels low.",
+        "educationChip": "Breathing slowly helps activate your body’s relaxation response.",
+        "affirmation": "Even one calm breath helps you recharge.",
+        "suggestedDay": 2
+      }
+    ]
+  }
+  

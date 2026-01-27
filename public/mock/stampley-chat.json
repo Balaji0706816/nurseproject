@@ -1,0 +1,41 @@
+{
+    "messages": [
+      {
+        "id": "m_001",
+        "role": "assistant",
+        "text": "Hi — I’m Stampley. I’m here to support you after your check-in.",
+        "createdAt": 1737500000000
+      },
+      {
+        "id": "m_002",
+        "role": "assistant",
+        "text": "To start: how stressful did diabetes feel today (0–10)?",
+        "createdAt": 1737500004000
+      },
+      {
+        "id": "m_003",
+        "role": "user",
+        "text": "Honestly a 7. I felt overwhelmed by meals and work.",
+        "createdAt": 1737500012000
+      },
+      {
+        "id": "m_004",
+        "role": "assistant",
+        "text": "That makes sense — balancing diabetes with work and meals can feel like a lot.\n\nWhat part felt most difficult today: planning meals, the timing, or the mental stress?",
+        "createdAt": 1737500018000
+      },
+      {
+        "id": "m_005",
+        "role": "user",
+        "text": "The timing. I missed lunch and then ate late.",
+        "createdAt": 1737500025000
+      },
+      {
+        "id": "m_006",
+        "role": "assistant",
+        "text": "Thanks for sharing. Missing meals can throw everything off.\n\nA small idea: choose one “backup snack” you can always keep in your bag (like nuts or a protein bar). Would that feel doable this week?",
+        "createdAt": 1737500031000
+      }
+    ]
+  }
+  

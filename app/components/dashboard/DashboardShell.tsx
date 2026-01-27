@@ -52,7 +52,7 @@ function PanelCard({
     >
       <header className="flex items-start justify-between gap-3 border-b border-slate-100 px-4 py-3 sm:px-5">
         <div className="min-w-0">
-          <div className="text-sm font-semibold text-slate-900">{title}</div>
+          <div className="text-lg text-slate-900">{title}</div>
           {subtitle ? <div className="mt-0.5 text-xs text-slate-500">{subtitle}</div> : null}
         </div>
         <div className="shrink-0">{right}</div>
@@ -273,7 +273,7 @@ export default function DashboardShell() {
   return (
     <div className="min-h-dvh w-full bg-slate-50">
       {/* Mobile glass topbar (Google Notes vibe) */}
-      <div className="md:hidden sticky top-0 z-40">
+      <div className="md:hidden sticky top-0 ">
         <div className="mx-auto max-w-[1600px] px-4 pt-3">
           <div
             className={cn(
