@@ -95,7 +95,7 @@ export default function ChatNavbar({
   return (
     <div
       className={cn(
-        "sticky top-0 z-30 w-full border-b border-slate-200 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/70",
+        "sticky top-0 z-50 w-full border-b border-slate-200 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/70",
         className
       )}
     >
